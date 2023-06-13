@@ -181,35 +181,36 @@ if (sessionStorage.getItem("book")) {
 } else {
   console.log("Erreur lors de l'enregistrement du livre dans la session.");
 }
-});
 
-if(sessionStorage.getItem('book')){
-  var books = JSON.parse(sessionStorage.getItem('book'));
-  books.forEach(element => {
-      getPreviousBook(element);
-  });
+
+// if(sessionStorage.getItem('book')){
+//   var books = JSON.parse(sessionStorage.getItem('book'));
+//   books.forEach(element => {
+//       getPreviousBook(element);
+//   });
+// }
+
+var pochliste = (sessionStorage.getItem('pochliste')!=null)?JSON.parse(sessionStorage.getItem('pochliste')):[];
+
+// Ajouter le livre à la pochliste
+pochliste.push(book);
+
+// Enregistrer la pochliste dans la session
+sessionStorage.setItem("pochliste", JSON.stringify(pochliste));
+
+// Vérifier si le livre a été ajouté avec succès à la pochliste
+if (sessionStorage.getItem("pochliste")) {
+  console.log(JSON.parse(sessionStorage.getItem('pochliste')));
+} else {
+  console.log("Erreur lors de l'ajout du livre à la pochliste.");
 }
+});
 
 resultssearch.appendChild(bookmarkIcon);
 
-// var pochliste = JSON.parse(sessionStorage.getItem("pochliste")) || [];
-
-// // Ajouter le livre à la pochliste
-// pochliste.push(livre);
-
-// // Enregistrer la pochliste dans la session
-// sessionStorage.setItem("pochliste", JSON.stringify(pochliste));
-
-// // Vérifier si le livre a été ajouté avec succès à la pochliste
-// if (sessionStorage.getItem("pochliste")) {
-//   console.log("Le livre a été ajouté à la pochliste.");
-// } else {
-//   console.log("Erreur lors de l'ajout du livre à la pochliste.");
-// }
-
-// // Pour récupérer la pochliste enregistrée dans une autre partie de votre code
-// var pochlisteEnregistree = JSON.parse(sessionStorage.getItem("pochliste"));
-// console.log("Pochliste enregistrée dans la session :", pochlisteEnregistree);
+// Pour récupérer la pochliste enregistrée dans une autre partie de votre code
+var pochlisteEnregistree = JSON.parse(sessionStorage.getItem("pochliste"));
+console.log("Pochliste enregistrée dans la session :", pochlisteEnregistree);
 
     // Create HTML elements for each book information
     for (var key in infos) {
