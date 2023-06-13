@@ -1,0 +1,79 @@
+/*# sourceMappingURL=stylesass.css.map */
+body{
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1em;
+    background-color : #ffffff;
+}
+
+ img:hover{
+    opacity: 1;
+}
+
+/* button { 
+    padding: 15px;
+    border: none;
+    background-color: green;
+    text-decoration : none;
+    color: #ffffff;
+    text-align: center;
+}  */
+
+form {
+    padding: 15px;
+    border-color:#82b27a;
+    text-align: left;
+
+}
+
+
+
+/* input {
+    padding: 15px;
+    border: black;
+    text-align: left;
+  } */
+
+label {
+        margin-bottom: 10px;
+      }
+      
+input[type='submit'] {
+        width: 200px;
+        margin: auto;
+        margin-top: 30px;
+        text-align: left;
+      }
+
+.cta{
+    background-color: green;
+}
+
+/* #resultat-recherche {
+    display: flex;
+    justify-content: space-between;
+  } */
+  
+  /* #resultat-recherche{
+  float: left;
+  width: 33.33%;
+}
+
+/* Clear floats after the columns */
+/* .label,
+  .valeur,
+  .imgBook :after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
+/* @media screen and (max-width: 600px) {
+ #resultat-recherche {
+    width: 100%;
+  }
+} */ 
+
+ 
+    

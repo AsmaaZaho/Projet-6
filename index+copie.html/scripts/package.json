@@ -1,0 +1,11 @@
+{
+  "name": "indexcopie.html",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch stylesass.scss style_index.css"
+  },
+  "author": "",
+  "license": "ISC"
+}
