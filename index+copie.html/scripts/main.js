@@ -1,7 +1,6 @@
 
   const ready = () => {
     if (document.readyState !== 'loading') {
-      console.log('test');
       init();
     } else {
       document.addEventListener('DOMContentLoaded', fn);
@@ -9,15 +8,11 @@
   };
   
   const init = () => {
-    console.log("test");
-
     const resultatRecherche = document.createElement("div");
     resultatRecherche.id = "resultat-recherche";
   
     resultatRecherche.style.display = "none";
 
-  
-    
     const button = document.createElement("button");
     button.textContent="Ajouter un livre";
     button.id = "addbutt";
@@ -25,63 +20,53 @@
     button.addEventListener("click", () => {onclick()});
 
     const content = document.getElementById("content");
-    //content.appendChild(button);
+
     //add the created button like first child of element content 
     content.prepend(button);
     content.appendChild(resultatRecherche);
 
     function onclick() {
-    console.log("click"); 
-    events();
-    document.getElementById("addbutt").style.display = "none";
-    
+      console.log("click"); 
+      events();
+      document.getElementById("addbutt").style.display = "none"; 
     }
-  };
+    };
 
-    const events = () => {
+  const events = () => {
+    var formulaire = document.createElement("form");
+    formulaire.setAttribute("method", "post");
+    formulaire.setAttribute("action", "submit.php");
 
-    // function afficherFormulaire() {
-      var formulaire = document.createElement("form");
-      formulaire.setAttribute("method", "post");
-      formulaire.setAttribute("action", "submit.php");
-
-      const labeltitre = document.createElement("label");
-      var titreDuLivre = document.createElement("input");
-      titreDuLivre.setAttribute("type", "text");
-      labeltitre.textContent = "Titre du livre";
-      titreDuLivre.appendChild(labeltitre);
+    const labeltitre = document.createElement("label");
+    var titreDuLivre = document.createElement("input");
+    titreDuLivre.setAttribute("type", "text");
+    labeltitre.textContent = "Titre du livre";
+    titreDuLivre.appendChild(labeltitre);
 
 
-      const labelAuteur = document.createElement("label");
-      var auteurDuLivre= document.createElement("input");
-      auteurDuLivre.setAttribute("type", "text");
-      labelAuteur.textContent = "Auteur";
-      auteurDuLivre.appendChild(labelAuteur);
+    const labelAuteur = document.createElement("label");
+    var auteurDuLivre= document.createElement("input");
+    auteurDuLivre.setAttribute("type", "text");
+    labelAuteur.textContent = "Auteur";
+    auteurDuLivre.appendChild(labelAuteur);
 
-       // create a submit button
-       var btnRechercher = document.createElement("input");
-       btnRechercher.setAttribute("type", "submit");
-       btnRechercher.setAttribute("value", "Rechercher");
+    // create a submit button
+    var btnRechercher = document.createElement("input");
+    btnRechercher.setAttribute("type", "submit");
+    btnRechercher.setAttribute("value", "Rechercher");
 
-       var btnAnnuler = document.createElement("button");
-       btnAnnuler.textContent= "Annuler";
+    var btnAnnuler = document.createElement("button");
+    btnAnnuler.textContent= "Annuler";
 
-       btnAnnuler.addEventListener("click", function(event) {
-        event.preventDefault(); // Annuler le comportement par défaut du formulaire
-        
-        // Réinitialiser le formulaire
-        formulaire.reset();
-        
-        // Supprimer les résultats affichés
-        document.getElementById("resultat-recherche").style.display = "none";
-
-        formulaire.style.display = "none";
-
-        document.getElementById("addbutt").style.display = "block";
-        
-      });
-
-     
+    btnAnnuler.addEventListener("click", function(event) {
+    event.preventDefault(); // Annuler le comportement par défaut du formulaire
+    // Réinitialiser le formulaire
+    formulaire.reset();
+    // Supprimer les résultats affichés
+    document.getElementById("resultat-recherche").style.display = "none";
+    formulaire.style.display = "none";
+    document.getElementById("addbutt").style.display = "block";
+    });
 
     // Create a break line element
     var br = document.createElement("br");
@@ -103,137 +88,156 @@
     content.prepend(formulaire);
 
     formulaire.addEventListener("submit", async (event) => {
-      // On empêche le comportement par défaut
-    try {
+      try {
+        // On empêche le comportement par défaut
         event.preventDefault();
-
-      // On récupère les deux champs et on affiche leur valeur
-      console.log("le titre du livre est : ", titreDuLivre.value);
-      console.log("l'auteur de ce livre est : ", auteurDuLivre.value);
-      const reponse = await fetch('https://www.googleapis.com/books/v1/volumes?q='+titreDuLivre.value+'+'+auteurDuLivre.value);
-      const books = await reponse.json();
-      console.log(books);
-      afficherResultats(books);
-      
-    } catch(error) {
+        // On récupère les deux champs et on affiche leur valeur
+        console.log("le titre du livre est : ", titreDuLivre.value);
+        console.log("l'auteur de ce livre est : ", auteurDuLivre.value);
+        const reponse = await fetch('https://www.googleapis.com/books/v1/volumes?q='+titreDuLivre.value+'+'+auteurDuLivre.value);
+        const books = await reponse.json();
+        console.log(books);
+        afficherResultats(books);
+      } catch(error) {
         console.error('Une erreur s\'est produite :', error);
-     }    
-  });  
- };
+      }    
+    });  
+  };
 
-function afficherResultats(results) {
+  function afficherResultats(results) {
 
-  
-  var resultssearch = document.getElementById("resultat-recherche");
-  resultssearch.querySelectorAll('*').forEach(n => n.remove());
-  resultssearch.style.display = "block";
+    var resultssearch = document.getElementById("resultat-recherche");
+    resultssearch.querySelectorAll('*').forEach(n => n.remove());
+    resultssearch.style.display = "block";
 
-  var titreRecherche = document.createElement("h3");
-  titreRecherche.textContent = "Résultats de Recherche";
+    var titreRecherche = document.createElement("h3");
+    titreRecherche.textContent = "Résultats de Recherche";
 
-  resultssearch.appendChild(titreRecherche);
+    resultssearch.appendChild(titreRecherche);
 
     var br = document.createElement('br'); 
     resultssearch.appendChild(br.cloneNode());
-  
+    
     if (results.totalItems > 0) {
-    for (i = 0; i < results.items.length; i++){
-      var book = results.items[i];
-      // console.log(book);
+      for (i = 0; i < results.items.length; i++){
+        var book = results.items[i];
+        // console.log(book);
+      
+        var infos = {};
+        infos['identifiant'] = book.id;
+        infos['titre'] = book.volumeInfo.title;
+        infos['auteur'] = book.volumeInfo.authors[0];
+        infos['description'] = book.volumeInfo.description ? book.volumeInfo.description.substring(0, 200) + '...' : 'Pas de description disponible';
+        
+        var imageElement = document.createElement("img");
+        imageElement.className = "imgBook";
+        
+        if (book.volumeInfo.imageLinks) {
+          infos['image'] = book.volumeInfo.imageLinks.smallThumbnail.replace('&edge=curl', '');
+          imageElement.src = infos['image'];
+        }else{
+          imageElement.src = "Unavailable.png"
+          imageElement.width = 100; // Définir la largeur souhaitée en pixels
+          imageElement.height = 100;
+        }
     
-      var infos = {};
-      infos['identifiant'] = book.id;
-      infos['titre'] = book.volumeInfo.title;
-      infos['auteur'] = book.volumeInfo.authors[0];
-      infos['description'] = book.volumeInfo.description ? book.volumeInfo.description.substring(0, 200) + '...' : 'Pas de description disponible';
-      
-      var imageElement = document.createElement("img");
-      imageElement.className = "imgBook";
-      
-      if (book.volumeInfo.imageLinks) {
-        infos['image'] = book.volumeInfo.imageLinks.smallThumbnail.replace('&edge=curl', '');
-        imageElement.src = infos['image'];
-      }else{
-        imageElement.src = "Unavailable.png"
-        imageElement.width = 100; // Définir la largeur souhaitée en pixels
-        imageElement.height = 100;
+        resultssearch.appendChild(imageElement);
+
+        var bookmarkIcon = document.createElement('button');
+        bookmarkIcon.className = 'bookmark';
+        bookmarkIcon.classList.add('fa', 'fa-bookmark-o');
+        bookmarkIcon.id = book.id;
+
+        imageElement.appendChild(bookmarkIcon);
+
+        bookmarkIcon.addEventListener("click", (event) => {
+          console.log(event.target);
+          // Récupérer le livre recherché
+          var books = event.target.id; 
+          // Enregistrer le livre dans la sessioN
+          sessionStorage.setItem("books", books);
+          // Vérifier si le livre a été enregistré avec succès
+          if (sessionStorage.getItem("books")) {
+            console.log("Le livre a été enregistré dans la session.");
+          } else {
+            console.log("Erreur lors de l'enregistrement du livre dans la session.");
+          }
+          if(storageAvailable('sessionStorage')) {
+
+            var pochliste = (sessionStorage.getItem('pochliste')!=null)?JSON.parse(sessionStorage.getItem('pochliste')):[];
+
+            if(pochliste!=null && !pochliste.includes(books)){
+              // Ajouter le livre à la pochliste
+              pochliste.push(books);
+              // Enregistrer la pochliste dans la session
+              sessionStorage.setItem("pochliste", JSON.stringify(pochliste));
+
+            //  <i class="fa-light fa-book-bookmark" style="color: #ff8d0a;"></i>
+ 
+            document.getElementById(books).classList.add("fa-book-bookmark");
+
+            }else{
+              var index = pochliste.indexOf(books);
+              pochliste.splice(index, 1);
+              // sessionStorage.removeItem("pochliste");
+              document.getElementById(books).classList.remove("fa-solid", "fa-book-bookmark");
+
+            }
+
+          // Vérifier si le livre a été ajouté avec succès à la pochliste 
+          if (sessionStorage.getItem("pochliste")) {
+            console.log("Pochliste enregistrée dans la session : ",JSON.parse(sessionStorage.getItem('pochliste')));
+          } else {
+            console.log("Erreur lors de l'ajout du livre à la pochliste.");
+          }
+          });
+          resultssearch.appendChild(bookmarkIcon);
+
+      // Create HTML elements for each book information
+      for (var key in infos) {
+        var value = infos[key];
+
+        var labelElement = document.createElement('span');
+        labelElement.textContent = key + ': ';
+        labelElement.className = "label";
+
+        var valueElement = document.createElement('span');
+        valueElement.textContent = value;
+        valueElement.className = "valeur";
+
+        var br = document.createElement('br'); 
+
+        resultssearch.appendChild(br.cloneNode());
+        resultssearch.appendChild(labelElement);
+        resultssearch.appendChild(valueElement);
+        resultssearch.appendChild(br.cloneNode());
+        // labelElement.classList.add("col-sm-4");
+
       }
-  
-      resultssearch.appendChild(imageElement);
-
-    var bookmarkIcon = document.createElement('span');
-    bookmarkIcon.className = 'bookmark';
-    bookmarkIcon.innerHTML = "BOOKMARK";
-    bookmarkIcon.id = book.id;
-
-    bookmarkIcon.addEventListener("click", (event) => {
-      console.log(event.target.id);
+ 
+    }
+    // Pour récupérer la pochliste enregistrée dans une autre partie de votre code
+    var pochlisteEnregistree = JSON.parse(sessionStorage.getItem("pochliste"));
+    console.log("Pochliste enregistrée dans la session :", pochlisteEnregistree);
     
-    // Récupérer le livre recherché
-var book = event.target.id; 
+    //affihcer les livres enregistrés 
+    for(var bookSaved in pochlisteEnregistree){
+      var value = pochlisteEnregistree[bookSaved];
 
-// Enregistrer le livre dans la session
-sessionStorage.setItem("book", book);
-
-// Vérifier si le livre a été enregistré avec succès
-if (sessionStorage.getItem("book")) {
-  console.log("Le livre a été enregistré dans la session.");
-} else {
-  console.log("Erreur lors de l'enregistrement du livre dans la session.");
-}
-
-
-// if(sessionStorage.getItem('book')){
-//   var books = JSON.parse(sessionStorage.getItem('book'));
-//   books.forEach(element => {
-//       getPreviousBook(element);
-//   });
-// }
-
-var pochliste = (sessionStorage.getItem('pochliste')!=null)?JSON.parse(sessionStorage.getItem('pochliste')):[];
-
-// Ajouter le livre à la pochliste
-pochliste.push(book);
-
-// Enregistrer la pochliste dans la session
-sessionStorage.setItem("pochliste", JSON.stringify(pochliste));
-
-// Vérifier si le livre a été ajouté avec succès à la pochliste
-if (sessionStorage.getItem("pochliste")) {
-  console.log(JSON.parse(sessionStorage.getItem('pochliste')));
-} else {
-  console.log("Erreur lors de l'ajout du livre à la pochliste.");
-}
-});
-
-resultssearch.appendChild(bookmarkIcon);
-
-// Pour récupérer la pochliste enregistrée dans une autre partie de votre code
-var pochlisteEnregistree = JSON.parse(sessionStorage.getItem("pochliste"));
-console.log("Pochliste enregistrée dans la session :", pochlisteEnregistree);
-
-    // Create HTML elements for each book information
-    for (var key in infos) {
-      var value = infos[key];
-
-      var labelElement = document.createElement('section');
-      labelElement.textContent = key + ': ';
-      labelElement.className = "label";
-
-      var valueElement = document.createElement('section');
-      valueElement.textContent = value;
-      valueElement.className = "valeur";
+      var elementCreated = document.createElement('span');
+      elementCreated.textContent = value;
+      elementCreated.className = "booksaved";
 
       var br = document.createElement('br'); 
 
-      resultssearch.appendChild(br.cloneNode());
-      resultssearch.appendChild(labelElement);
-      resultssearch.appendChild(valueElement);
-      resultssearch.appendChild(br.cloneNode());
+      pochlistetitre = document.querySelector("#content h2");
+
+      content.prepend(pochlistetitre);
+      pochlistetitre.appendChild(br.cloneNode());
+      pochlistetitre.appendChild(elementCreated);
+  
     }
- 
-  }
-      // console.log(infos);
+    console.log(infos); 
     } else {
       console.log('Livre introuvable');
       var notFoundElement = document.createElement('section');
@@ -269,3 +273,9 @@ function storageAvailable(type) {
   }
 }
 
+// if(sessionStorage.getItem('book')){
+//   var books = JSON.parse(sessionStorage.getItem('book'));
+//   books.forEach(element => {
+//       getPreviousBook(element);
+//   });
+// }
