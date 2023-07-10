@@ -1,79 +1,167 @@
-/*# sourceMappingURL=stylesass.css.map */
-body{
-    text-align: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 1em;
-    background-color : #ffffff;
+body {
+  text-align: center;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 16px;
 }
 
- img:hover{
-    opacity: 1;
+h2 {
+  display: block;
+  width: 100%;
 }
 
-/* button { 
-    padding: 15px;
-    border: none;
-    background-color: green;
-    text-decoration : none;
-    color: #ffffff;
-    text-align: center;
-}  */
-
-form {
-    padding: 15px;
-    border-color:#82b27a;
-    text-align: left;
-
+#formDiv {
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 }
 
+.standardButton, button, #addBook, #btnSearch {
+  text-align: center;
+  background-color: #469487;
+  color: #FFFFFF;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: larger;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 200px;
+  height: 50px;
+}
 
+button,
+#addBook:hover, #addBook:active, #btnSearch:hover, #btnSearch:active {
+  background-color: #38746A;
+}
 
-/* input {
-    padding: 15px;
-    border: black;
-    text-align: left;
-  } */
+.cancel {
+  display: block;
+  background-color: #DF5A4B;
+}
+
+.cancel:hover, .cancel:active {
+  background-color: #B9493D;
+}
+
+.cancel {
+  display: block;
+  margin-left: 0;
+}
+
+#btnSearch {
+  display: block;
+  margin-left: 0;
+}
 
 label {
-        margin-bottom: 10px;
-      }
-      
-input[type='submit'] {
-        width: 200px;
-        margin: auto;
-        margin-top: 30px;
-        text-align: left;
-      }
-
-.cta{
-    background-color: green;
+  text-align: left;
+  width: 100%;
+  display: block;
 }
 
-/* #resultat-recherche {
-    display: flex;
-    justify-content: space-between;
-  } */
-  
-  /* #resultat-recherche{
-  float: left;
-  width: 33.33%;
+input {
+  display: block;
+  width: 97%;
 }
 
-/* Clear floats after the columns */
-/* .label,
-  .valeur,
-  .imgBook :after {
-  content: "";
-  display: table;
-  clear: both;
+.bookContent {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  color: black;
 }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
-/* @media screen and (max-width: 600px) {
- #resultat-recherche {
-    width: 100%;
+.hidden {
+  display: none;
+}
+
+.book {
+  background-color: #E0E0E0;
+  font-size: smaller;
+  border: 1.5px solid #9E9E9E;
+  border-radius: 3px;
+  padding: 1% 1% 1% 1%;
+  margin: 1%;
+  width: 40%;
+  text-align: left;
+  font-size: x-small;
+}
+
+.book .bookTitle, .book .bookId {
+  font-weight: bolder;
+}
+
+.book .bookId, .book .bookAuthor {
+  font-style: italic;
+}
+
+.book .imgBook {
+  display: flex;
+  vertical-align: bottom;
+  margin-left: auto;
+  margin-right: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100px;
+  width: 100px;
+  border-radius: 3px;
+  box-shadow: 0.2em 0.2em 0.8em rgba(0, 0, 0, 0.3);
+}
+
+.bookmark {
+  float: right;
+  color: #469487;
+  font-size: x-large;
+  cursor: pointer;
+}
+
+@media (min-width: 767px) {
+  #myBooks #searchDiv .button {
+    width: 150px;
+    margin: 10px 0px;
   }
-} */ 
+  #myBooks .book {
+    width: 45%;
+  }
+  #myBooks .book-bottom {
+    flex-direction: row;
+  }
+}
+@media (min-width: 991px) {
+  .book {
+    width: 30%;
+  }
+}
+.slide-down {
+  animation: slide-down 0.3s linear both;
+}
 
- 
-    
+.slide-up {
+  animation: slide-up 0.3s linear both;
+}
+
+@keyframes slide-down {
+  0% {
+    visibility: hidden;
+    height: 0;
+  }
+  95% {
+    visibility: visible;
+    height: 300px;
+  }
+  /* Set height to 'auto' after animation for spacing showing form-invalid feedback message */
+  100% {
+    visibility: visible;
+    height: auto;
+  }
+}
+@keyframes slide-up {
+  from {
+    visibility: visible;
+    height: 300px;
+  }
+  to {
+    visibility: hidden;
+    height: 0;
+  }
+}/*# sourceMappingURL=stylesass.css.map */
