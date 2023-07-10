@@ -28,33 +28,11 @@ h2 {
     width: 100%;
 }
 
-// .title, h1 {
-//     background-color: $bookDivBackground;
-//     border: 1.5px solid $bookDivBackground;
-//     margin: 1%;
-//     padding: 5.5px;
-// }
-
-
-// #searchDiv {
-// width:400px;
-// height:400px;
-// background:orange;
-// margin:0 auto;
-// margin-top:3%;
-// overflow:hidden;
-// }
-  
 #formDiv{
     height: 0;
     overflow: hidden;
     visibility: hidden;
-  }
-// // form {
-// //     padding: 10px 50px;
-// //     border-color:#82b27a;
-// //     text-align: left;
-// // }
+}
 
 .standardButton, button, #addBook, #btnSearch {
     text-align: center;
