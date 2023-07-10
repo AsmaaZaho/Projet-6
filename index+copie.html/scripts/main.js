@@ -10,7 +10,6 @@
   const init = () => {
 
     var pochList = (sessionStorage.getItem('pochList')!=null)?JSON.parse(sessionStorage.getItem('pochList')):[];
-    console.log(pochList);
     if(sessionStorage.getItem('pochList')){
       var books = JSON.parse(sessionStorage.getItem('pochList'));
       books.forEach(element => {
@@ -53,9 +52,9 @@
     form.classList.add('hidden');
     form.addEventListener("submit", (event) => {
       try {
-        // On empêche le comportement par défaut
+        // Override the form's default behavior
         event.preventDefault();
-        // On récupère les deux champs et on affiche leur valeur
+        // We retrieve the two fields and display their value
         displayResults(bookTitle, bookauthor);
       } catch(error) {
         console.error('Une erreur s\'est produite :', error);
@@ -104,26 +103,22 @@
     form.append(btnSearch);
     form.append(br.cloneNode());
     
-
     var cancelButton = document.createElement("button");
     cancelButton.textContent= "Annuler";
     cancelButton.classList = "cancel";
     cancelButton.id = "btnCancel";    
-    // cancelButton.classList.add("slide-up");
 
     cancelButton.addEventListener("click", function(event) {
-    event.preventDefault(); // Annuler le comportement par défaut du formulaire
-    // Réinitialiser le formulaire
-    form.reset();
-    // Supprimer les résultats affichés
-    document.getElementById("resultsSearch").classList.add("hidden");
-    document.getElementById("addBook").classList.remove("hidden");
-    // form.classList.add("hidden");
-    slideup();
+      // Override the form's default behavior
+      event.preventDefault(); 
+      // Reset the form
+      form.reset();
+      // Delete displayed results
+      document.getElementById("resultsSearch").classList.add("hidden");
+      document.getElementById("addBook").classList.remove("hidden");
+      slideup();
     });
     form.appendChild(cancelButton);
-    
-    
     };
 
   function slidedown() {
@@ -165,112 +160,105 @@
     }
 }
 
-function addBook(book){
+  function addBook(book){
 
-  if(storageAvailable('sessionStorage')) {
-    var pochListTitle = document.getElementById("pochList");
-    pochListTitle.querySelectorAll('*')?.forEach(n => n.remove());
-    var results = document.getElementById('resultsSearch');
-    var pochList = (sessionStorage.getItem('pochList')!=null)?JSON.parse(sessionStorage.getItem('pochList')):[];
-
-    if(pochList!=null && !pochList.includes(book)){
-      // add book at the pochList
-      pochList.push(book);
-      // save the pochList in the session
-      document.getElementById(book).classList = 'bookmark far fa-trash-alt';
-    }else{
-      var index = pochList.indexOf(book);
-      pochList.splice(index, 1);
-      var searchBook = document.getElementById(book);
-      if(searchBook) searchBook.classList = "bookmark fas fa-bookmark";
-    }
-  sessionStorage.setItem("pochList", JSON.stringify(pochList));
-  pochList.forEach(element => {
-    saveBook(element);
-  });
-  return true;
-  }
-  else{
-    return false;
-  }
-}
-
-function displayBook(book, isNew) {
-
-  var items = JSON.parse(sessionStorage.getItem("book"));
-  var itemBook = document.createElement("div");
-  itemBook.classList = "book";
-  itemBook.id = book.id+"div";
-
-  var infos = {};
-  infos['Titre'] = book.volumeInfo.title;
-  infos['Titre'].classList = "bookTitle";
-  infos['Id'] = book.id;
-  infos['Id'].classList = "bookId";
-  infos['Auteur'] = book.volumeInfo.authors[0];
-  infos['Auteur'].classList = "bookAuthor";
-  infos['Description'] = book.volumeInfo.description ? book.volumeInfo.description.substring(0, 200) + '...' : 'Pas de description disponible';
-
-  // for (var prop in infos) {
-  //   if (infos.hasOwnProperty(prop)) {
-  //     var element = infos[prop];
-  //     element.id = prop.toLowerCase() + 'Book';
-  //   }
-  // }
-  var imageElement = document.createElement("img");
-  imageElement.classList = "imgBook";
-  
-  if (book.volumeInfo.imageLinks) {
-    imageElement.src = book.volumeInfo.imageLinks.smallThumbnail.replace('&edge=curl', '');
-  }else{
-    imageElement.src = "Unavailable.png"
-    imageElement.width = 100; // Définir la largeur souhaitée en pixels
-    imageElement.height = 100;
-  }
-
-  var pochList = (sessionStorage.getItem('pochList')!=null)?JSON.parse(sessionStorage.getItem('pochList')):[];
-  var bookmarkIcon = document.createElement('span');
-  bookmarkIcon.id = book.id;
-  bookmarkIcon.classList = (!pochList.includes(book.id))?"bookmark fas fa-bookmark":"bookmark far fa-trash-alt";
-  var bookmarkimg = document.createElement('i');
-  bookmarkimg.id = book.id;
-  imageElement.appendChild(bookmarkIcon);
-  bookmarkIcon.addEventListener("click", (event) =>{
-    var bookId = event.currentTarget.id;
-    var success = addBook(bookId);
-    if(success){
+    if(storageAvailable('sessionStorage')) {
+      var pochListTitle = document.getElementById("pochList");
+      pochListTitle.querySelectorAll('*')?.forEach(n => n.remove());
+      var results = document.getElementById('resultsSearch');
       var pochList = (sessionStorage.getItem('pochList')!=null)?JSON.parse(sessionStorage.getItem('pochList')):[];
-      event.currentTarget.classList = (!pochList.includes(book.id))?"bookmark fas fa-bookmark":"bookmark far fa-trash-alt";
+
+      if(pochList!=null && !pochList.includes(book)){
+        // add book at the pochList
+        pochList.push(book);
+        // save the pochList in the session
+        document.getElementById(book).classList = 'bookmark far fa-trash-alt';
+      }else{
+        var index = pochList.indexOf(book);
+        pochList.splice(index, 1);
+        var searchBook = document.getElementById(book);
+        if(searchBook) searchBook.classList = "bookmark fas fa-bookmark";
+      }
+      sessionStorage.setItem("pochList", JSON.stringify(pochList));
+      pochList.forEach(element => {
+        saveBook(element);
+      });
+      return true;
+    }else{
+      return false;
     }
-  });
-  itemBook.appendChild(bookmarkIcon);
+  }
 
-// Create HTML elements for each book information
-for (var key in infos) {
-  var value = infos[key];
+  function displayBook(book, isNew) {
 
-  var labelElement = document.createElement('span');
-  labelElement.textContent = key + ': ';
-  // labelElement.classList = "labelBook";
-  var valueElement = document.createElement('span');
-  valueElement.textContent = value;
-  // valueElement.classList = "valueBook";
+    var items = JSON.parse(sessionStorage.getItem("book"));
+    var itemBook = document.createElement("div");
+    itemBook.classList = "book";
+    itemBook.id = book.id+"div";
 
-  var br = document.createElement('br'); 
+    var infos = {};
+    infos['Titre'] = book.volumeInfo.title;
+    infos['Id'] = book.id;
+    infos['Auteur'] = book.volumeInfo.authors[0];
+    infos['Description'] = book.volumeInfo.description ? book.volumeInfo.description.substring(0, 200) + '...' : 'Pas de description disponible';
 
-  itemBook.appendChild(br.cloneNode());
-  itemBook.appendChild(labelElement);
-  itemBook.appendChild(valueElement);
-  itemBook.appendChild(br.cloneNode());
-  itemBook.appendChild(imageElement);
-  // labelElement.classList.add("col-sm-4");
-}
-if(isNew==true){
-  document.getElementById("resultsSearch").append(itemBook);
-}else{
-  document.getElementById("pochList").append(itemBook);
-}
-}
+    var imageElement = document.createElement("img");
+    imageElement.classList = "imgBook";
+    
+    if (book.volumeInfo.imageLinks) {
+      imageElement.src = book.volumeInfo.imageLinks.smallThumbnail.replace('&edge=curl', '');
+    }else{
+      imageElement.src = "Unavailable.png"
+      imageElement.width = 100; // Définir la largeur souhaitée en pixels
+      imageElement.height = 100;
+    }
+
+    var pochList = (sessionStorage.getItem('pochList')!=null)?JSON.parse(sessionStorage.getItem('pochList')):[];
+    var bookmarkIcon = document.createElement('span');
+    bookmarkIcon.id = book.id;
+    bookmarkIcon.classList = (!pochList.includes(book.id))?"bookmark fas fa-bookmark":"bookmark far fa-trash-alt";
+    var bookmarkimg = document.createElement('i');
+    bookmarkimg.id = book.id;
+    imageElement.appendChild(bookmarkIcon);
+    bookmarkIcon.addEventListener("click", (event) =>{
+      var bookId = event.currentTarget.id;
+      var success = addBook(bookId);
+      if(success){
+        var pochList = (sessionStorage.getItem('pochList')!=null)?JSON.parse(sessionStorage.getItem('pochList')):[];
+        event.currentTarget.classList = (!pochList.includes(book.id))?"bookmark fas fa-bookmark":"bookmark far fa-trash-alt";
+      }
+    });
+    itemBook.appendChild(bookmarkIcon);
+
+    // Create HTML elements for each book information
+    for (var key in infos) {
+      var value = infos[key];
+
+      var labelElement = document.createElement('span');
+      labelElement.textContent = key + ': ';
+      var valueElement = document.createElement('span');
+      valueElement.textContent = value;
+      if(key == "Titre") {
+        labelElement.classList = "bookTitle";
+        valueElement.classList = "bookTitle";
+      }
+      if(key == "Id"){
+        labelElement.classList = "bookId";
+        valueElement.classList = "bookId";
+      }
+      var br = document.createElement('br'); 
+      itemBook.appendChild(br.cloneNode());
+      itemBook.appendChild(labelElement);
+      itemBook.appendChild(valueElement);
+      itemBook.appendChild(br.cloneNode());
+      itemBook.appendChild(imageElement);
+    }
+    if(isNew==true){
+      document.getElementById("resultsSearch").append(itemBook);
+    }else{
+      document.getElementById("pochList").append(itemBook);
+    }
+  }
 
 async function saveBook(id) {
       var googleAPI = 'https://www.googleapis.com/books/v1/volumes/'+id;

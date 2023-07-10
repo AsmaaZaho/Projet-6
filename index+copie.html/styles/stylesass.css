@@ -91,7 +91,7 @@ input {
   font-weight: bolder;
 }
 
-.book .bookId, .book .bookAuthor {
+.book .bookId {
   font-style: italic;
 }
 
