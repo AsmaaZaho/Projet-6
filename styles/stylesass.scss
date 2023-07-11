@@ -11,9 +11,6 @@ $cancelButtonHover: #B9493D;
 $buttonWidth: 200px;
 $buttonHeight : 50px;
 $bookDivBackground: #E0E0E0;
-$tenPixels: 10px;
-$zero : 0px;
-$thirtyPercent: 30%;
 $slide-content-height: 300px;
 
 
@@ -150,20 +147,17 @@ input {
     #myBooks {
         #searchDiv .button {
             width: 150px;
-            margin: $tenPixels $zero;
+            margin: 10px 0;
         }
         .book {
             width: 45%;
-        }
-        .book-bottom {
-            flex-direction: row;
         }
     }
 }
 
 @media (min-width: 991px) {
     .book {
-        width: $thirtyPercent;
+        width: 30%;
     }
 }
 

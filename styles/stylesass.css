@@ -123,13 +123,10 @@ input {
 @media (min-width: 767px) {
   #myBooks #searchDiv .button {
     width: 150px;
-    margin: 10px 0px;
+    margin: 10px 0;
   }
   #myBooks .book {
     width: 45%;
-  }
-  #myBooks .book-bottom {
-    flex-direction: row;
   }
 }
 @media (min-width: 991px) {
