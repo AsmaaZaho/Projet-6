@@ -120,18 +120,26 @@ input {
   cursor: pointer;
 }
 
-@media (min-width: 767px) {
+@media (max-width: 480px) {
+  .book {
+    width: 50%;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
   #myBooks #searchDiv .button {
     width: 150px;
     margin: 10px 0;
   }
   #myBooks .book {
-    width: 45%;
+    width: 30%;
   }
 }
 @media (min-width: 991px) {
   .book {
-    width: 30%;
+    width: 25%;
+  }
+  .bookContent {
+    width: 100%;
   }
 }
 .slide-down {
